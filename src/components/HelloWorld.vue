@@ -11,8 +11,28 @@ defineProps({
 <template>
   <Formik
     :initialValues="{ name: '', email: '', password: '' }"
-    :validate="validate"
-    :onSubmit="onSubmit"
+    :validate="
+      (values) => {
+        const errors = {};
+        if (!values.name) {
+          errors.name = 'Name is required';
+        }
+        if (!values.email) {
+          errors.email = 'Email is required';
+        }
+        if (!values.password) {
+          errors.password = 'Password is required';
+        }
+        return errors;
+      }
+    "
+    :onSubmit="
+      async (values, toggleSubmit) => {
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        console.log(values);
+        toggleSubmit(false);
+      }
+    "
   >
     <template #default="{ values, errors, isSubmitting }">
       <div class="greetings">
