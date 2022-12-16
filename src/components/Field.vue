@@ -1,5 +1,4 @@
 <script setup>
-//create a Field component that will be used in the Formik component with Dynamic Components and only name and as props
 import { defineProps } from "vue";
 const props = defineProps({
   name: {

@@ -30,16 +30,12 @@ defineProps({
       async (values, toggleSubmit) => {
         setTimeout(() => {
           alert(JSON.stringify(values));
-          setSubmitting(false);
+          toggleSubmit(false);
         }, 400);
       }
     "
   >
     <template #default="{ values, errors, isSubmitting }">
-      <div class="greetings">
-        <h1>{{ msg }}</h1>
-        <h3>Let's get started</h3>
-      </div>
       <div class="form">
         <div class="form__group">
           <label for="name">Name</label>
