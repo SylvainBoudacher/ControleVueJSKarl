@@ -28,9 +28,10 @@ defineProps({
     "
     :onSubmit="
       async (values, toggleSubmit) => {
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-        console.log(values);
-        toggleSubmit(false);
+        setTimeout(() => {
+          alert(JSON.stringify(values));
+          setSubmitting(false);
+        }, 400);
       }
     "
   >
