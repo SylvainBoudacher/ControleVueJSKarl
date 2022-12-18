@@ -36,6 +36,10 @@ const handleSubmit = (e) => {
   isSubmitting.value = true;
   const potentialErrors = props.validate(values);
 
+  for (const key in errors) {
+    delete errors[key];
+  }
+
   if (Object.keys(potentialErrors).length > 0) {
     for (const [key, value] of Object.entries(potentialErrors)) {
       errors[key] = value;
