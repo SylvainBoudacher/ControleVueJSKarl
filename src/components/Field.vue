@@ -1,20 +1,40 @@
 <script setup>
-import { defineProps } from "vue";
+import { inject } from "vue";
+
 const props = defineProps({
   name: {
     type: String,
     required: true,
   },
   as: {
-    type: String,
+    type: [Object, String],
     required: true,
   },
 });
+
+const formik = inject("formik");
 </script>
 
 <template>
-  <div class="form__group">
-    <label :for="name">{{ name }}</label>
-    <component :is="as" :id="name" :name="name" />
-  </div>
+  <component :name="name" :is="props.as" v-model="formik.values[props.name]">
+    <slot />
+  </component>
 </template>
+
+<style scoped>
+input {
+  border: 1px solid red;
+}
+
+textarea {
+  border: 1px solid red;
+}
+
+select {
+  border: 1px solid red;
+}
+
+label {
+  color: red;
+}
+</style>

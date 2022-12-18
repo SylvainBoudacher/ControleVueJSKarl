@@ -24,7 +24,7 @@ const isSubmitting = ref(false);
 // Methods
 const toggleSubmit = (value) => (isSubmitting.value = value);
 
-const handleSubmit = async (e) => {
+const handleSubmit = (e) => {
   e.preventDefault();
   isSubmitting.value = true;
   const potentialErrors = props.validate(values);
@@ -37,14 +37,27 @@ const handleSubmit = async (e) => {
     return;
   }
 
-  await props.onSubmit(values, toggleSubmit);
+  props.onSubmit(values, toggleSubmit);
 
   isSubmitting.value = false;
 };
 </script>
 
 <template>
-  <form @submit="handleSubmit">
+  <form @submit.prevent="handleSubmit">
+    <div>
+      <p>Values :</p>
+      {{ values }}
+      <hr />
+      <p>Errors :</p>
+      <ul>
+        <li v-for="(error, field) in errors" :key="field">{{ error }}</li>
+      </ul>
+      <hr />
+      <p>Is Submitting :</p>
+      {{ isSubmitting }}
+      <hr />
+    </div>
     <slot :values="values" :errors="errors" :isSubmitting="isSubmitting" />
   </form>
 </template>
