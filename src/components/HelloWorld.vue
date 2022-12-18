@@ -7,6 +7,10 @@ defineProps({
     required: true,
   },
 });
+
+const onSubmit = (values) => {
+  alert(JSON.stringify(values, null, 2));
+};
 </script>
 
 <template>
@@ -27,14 +31,7 @@ defineProps({
         return errors;
       }
     "
-    :onSubmit="
-      async (values, toggleSubmit) => {
-        setTimeout(() => {
-          alert(JSON.stringify(values));
-          toggleSubmit(false);
-        }, 400);
-      }
-    "
+    :onSubmit="onSubmit"
   >
     <template #default="{ values, errors, isSubmitting }">
       <div class="form">
