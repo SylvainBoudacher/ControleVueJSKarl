@@ -12,11 +12,16 @@ const props = defineProps({
   },
 });
 
-const formik = inject("formik");
+const { values, inputUpdated } = inject("values");
 </script>
 
 <template>
-  <component :name="name" :is="props.as" v-model="formik.values[props.name]">
+  <component
+    :name="name"
+    :is="props.as"
+    :value="values[name]"
+    @input="inputUpdated(name, $event.target.value)"
+  >
     <slot />
   </component>
 </template>
@@ -32,9 +37,5 @@ textarea {
 
 select {
   border: 1px solid red;
-}
-
-label {
-  color: red;
 }
 </style>

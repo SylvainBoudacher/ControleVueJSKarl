@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, reactive, ref } from "vue";
+import { defineProps, provide, reactive, ref } from "vue";
 
 const props = defineProps({
   initialValues: {
@@ -20,6 +20,13 @@ const props = defineProps({
 const values = reactive(props.initialValues);
 const errors = reactive({});
 const isSubmitting = ref(false);
+
+const inputUpdated = (id, value) => {
+  values[id] = value;
+};
+
+provide("values", { values, inputUpdated });
+provide("errors", { errors });
 
 // Methods
 const toggleSubmit = (value) => (isSubmitting.value = value);

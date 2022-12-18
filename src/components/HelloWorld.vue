@@ -1,77 +1,58 @@
 <script setup>
 import Formik from "./Formik.vue";
 import Field from "./Field.vue";
-defineProps({
-  msg: {
-    type: String,
-    required: true,
-  },
-});
+
+const initialValues = {
+  name: "",
+  email: "",
+  password: "",
+};
 
 const onSubmit = (values) => {
   alert(JSON.stringify(values, null, 2));
 };
+
+const validateValues = (values) => {
+  const errors = {};
+  name: if (!values.name) {
+    errors.name = "Name is required";
+    break name;
+  }
+  email: if (!values.email) {
+    errors.email = "Email is required";
+    break email;
+  } else if (!/\S+@\S+\.\S+/.test(values.email)) {
+    errors.email = "Email is invalid";
+    break email;
+  }
+  password: if (!values.password) {
+    errors.password = "Password is required";
+    break password;
+  } else if (values.password.length < 6) {
+    errors.password = "Password must be at least 6 characters";
+    break password;
+  }
+  return errors;
+};
 </script>
 
-<template>
+<template v-slot="default">
   <Formik
-    :initialValues="{ name: '', email: '', password: '' }"
-    :validate="
-      (values) => {
-        const errors = {};
-        if (!values.name) {
-          errors.name = 'Name is required';
-        }
-        if (!values.email) {
-          errors.email = 'Email is required';
-        }
-        if (!values.password) {
-          errors.password = 'Password is required';
-        }
-        return errors;
-      }
-    "
+    :initialValues="initialValues"
+    :validate="validateValues"
     :onSubmit="onSubmit"
   >
-    <template #default="{ values, errors, isSubmitting }">
-      <div class="form">
-        <div class="form__group">
-          <label for="name">Name</label>
-          <input
-            type="text"
-            id="name"
-            v-model="values.name"
-            :class="{ error: errors.name }"
-          />
-          <p class="error" v-if="errors.name">{{ errors.name }}</p>
-        </div>
-        <div class="form__group">
-          <label for="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            v-model="values.email"
-            :class="{ error: errors.email }"
-          />
-          <p class="error" v-if="errors.email">{{ errors.email }}</p>
-        </div>
-        <div class="form__group">
-          <label for="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            v-model="values.password"
-            :class="{ error: errors.password }"
-          />
-          <p class="error" v-if="errors.password">{{ errors.password }}</p>
-        </div>
-        <div class="form__group">
-          <button type="submit" :disabled="isSubmitting">
-            {{ isSubmitting ? "Submitting..." : "Submit" }}
-          </button>
-        </div>
-      </div>
-    </template>
+    <div class="main">
+      <Field name="name" as="input" label="name" placeholder="name" />
+      <Field name="email" as="input" label="email" placeholder="email" />
+      <Field
+        name="password"
+        as="input"
+        label="password"
+        placeholder="password"
+      />
+      <button type="submit">Submit</button>
+    </div>
   </Formik>
 </template>
 
@@ -99,5 +80,13 @@ const onSubmit = (values) => {
   flex-direction: column;
   align-items: center;
   margin-bottom: 1rem;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 1rem;
 }
 </style>
