@@ -28,14 +28,22 @@ const { values, inputUpdated } = inject("values");
 
 <style scoped>
 input {
-  border: 1px solid red;
+  background: 0;
+  outline: none;
+  width: 60vw;
+  max-width: 200px;
+  font-size: 1.5em;
 }
 
 textarea {
   border: 1px solid red;
+  width: 60vw;
+  max-width: 200px;
 }
 
 select {
-  border: 1px solid red;
+  width: 60vw;
+  max-width: 200px;
+  border: 1px solid blue;
 }
 </style>

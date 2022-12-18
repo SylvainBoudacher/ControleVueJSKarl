@@ -6,6 +6,8 @@ const initialValues = {
   name: "",
   email: "",
   password: "",
+  textarea: "",
+  select: "",
 };
 
 const onSubmit = (values) => {
@@ -32,6 +34,14 @@ const validateValues = (values) => {
     errors.password = "Password must be at least 6 characters";
     break password;
   }
+  textarea: if (!values.textarea) {
+    errors.textarea = "Textarea is required";
+    break textarea;
+  }
+  select: if (!values.select) {
+    errors.select = "Select is required";
+    break select;
+  }
   return errors;
 };
 </script>
@@ -51,42 +61,25 @@ const validateValues = (values) => {
         label="password"
         placeholder="password"
       />
+      <Field name="textarea" as="textarea" label="textarea" />
+      <Field name="select" as="select" label="select">
+        <option value="">Select</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </Field>
       <button type="submit">Submit</button>
     </div>
   </Formik>
 </template>
 
 <style>
-@media (min-width: 1024px) {
-  .greetings h1,
-  .greetings h3 {
-    text-align: left;
-  }
-}
-
-.greetings {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.form__group {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
 .main {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 1rem;
   padding-top: 1rem;
+  width: 100%;
 }
 </style>

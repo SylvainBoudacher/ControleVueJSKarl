@@ -21,12 +21,12 @@ const values = reactive(props.initialValues);
 const errors = reactive({});
 const isSubmitting = ref(false);
 
+// Injectables
 const inputUpdated = (id, value) => {
   values[id] = value;
 };
 
 provide("values", { values, inputUpdated });
-provide("errors", { errors });
 
 // Methods
 const toggleSubmit = (value) => (isSubmitting.value = value);
@@ -37,7 +37,6 @@ const handleSubmit = (e) => {
   const potentialErrors = props.validate(values);
 
   if (Object.keys(potentialErrors).length > 0) {
-    isSubmitting.value = false;
     for (const [key, value] of Object.entries(potentialErrors)) {
       errors[key] = value;
     }
@@ -54,15 +53,15 @@ const handleSubmit = (e) => {
   <form @submit.prevent="handleSubmit">
     <div>
       <p>Values :</p>
+      <pre>
       {{ values }}
+    </pre
+      >
       <hr />
       <p>Errors :</p>
       <ul>
         <li v-for="(error, field) in errors" :key="field">{{ error }}</li>
       </ul>
-      <hr />
-      <p>Is Submitting :</p>
-      {{ isSubmitting }}
       <hr />
     </div>
     <slot :values="values" :errors="errors" :isSubmitting="isSubmitting" />
